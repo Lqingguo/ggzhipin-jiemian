@@ -1,7 +1,6 @@
 /**
  * Created by liqingguo on 2018/12/3.
  */
-
 //入口文件
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -17,7 +16,7 @@ ReactDOM.render((
   <Switch>
     <Route path='/login' component={Login}/>
     <Route path='/register' component={Register}/>
-    <Route component={Main}/>
+    <Route  path='/' component={Main}/>
   </Switch>
   </HashRouter>
   </Provider>
