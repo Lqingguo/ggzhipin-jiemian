@@ -1,9 +1,14 @@
 import React,{Component} from 'react';
-
+import LaobanInfo from '../laoban-info';
+import DashenInfo from '../dashen-info'
+import {Route} from 'react-router-dom'
 class Main extends Component{
     render(){
     return (
-    <h1>Main</h1>
+        <div>
+            <Route path="/laobaninfo" component={LaobanInfo}/>
+            <Route path="/dasheninfo" component={DashenInfo}/>
+        </div>
     )
     }
 }

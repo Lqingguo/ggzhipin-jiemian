@@ -1,8 +1,15 @@
 import React,{Component} from 'react';
 import {Button,NavBar,WingBlank, WhiteSpace, List, InputItem,Radio } from 'antd-mobile';
 import Logo from '../logo/index';
+import PropTypes from 'prop-types'
+import {Redirect} from 'react-router-dom'
  const Item = List.Item
 class Register extends Component{
+  static propTypes ={
+    user:PropTypes.object.isRequired,
+    register:PropTypes.func.isRequired
+  }
+
      state= {
        laoban:true,
        username:'',
@@ -15,25 +22,30 @@ class Register extends Component{
          })
      }
     gologin=()=>{
-         console.log(111)
       this.props.history.replace('/login');
     }
-    goajax=()=>{
-      const {username,password,passwords} = this.state;
-      console.log(username)
+    goajax=async()=>{
+      const {username,password,laoban,passwords} = this.state;
+      this.props.register({username,password,passwords,type: laoban ? 'laoban': 'dashen'});
+
     }
 
     render(){
-         const {laoban} =this.state
+         const {laoban} =this.state;
+         const {errMsg,redirectTo} = this.props.user;
+         if(redirectTo){
+           return <Redirect to={redirectTo}/>
+         }
     return (
       <div>
       <NavBar>硅谷直聘</NavBar>
       <Logo/>
+        <p className="error">{errMsg}</p>
       <WingBlank>
           <List>
               <InputItem onChange={val=>this.stateChange('username',val)}>用户名：</InputItem><WhiteSpace/>
-              <InputItem onChange={val=>this.stateChange('username',val)}>密码：</InputItem><WhiteSpace/>
-              <InputItem onChange={val=>this.stateChange('username',val)}>确认密码：</InputItem><WhiteSpace/>
+              <InputItem onChange={val=>this.stateChange('password',val)} type="password">密码：</InputItem><WhiteSpace/>
+              <InputItem onChange={val=>this.stateChange('passwords',val)} type="password">确认密码：</InputItem><WhiteSpace/>
               <Item>
                   用户类型:  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <Radio checked={!laoban} onChange={this.stateChange.bind(null,'laoban',false)}>大神</Radio> &nbsp;&nbsp;&nbsp;

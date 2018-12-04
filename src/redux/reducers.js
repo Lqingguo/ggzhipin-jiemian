@@ -3,22 +3,38 @@
  */
 
 import {combineReducers} from 'redux';
-const initXxxState = 0
-function initXxx(previousState=initXxxState,action){
-    switch (action.type){
-      default:
-      return  previousState
-    }
-}
-const initYyyState=0
-function initYyy (previousState=initYyyState,action){
+import {AUTHSUCCESS,AUTHERROR} from './actions-types';
+const initUserState ={
+  username:'',
+  type:'',
+  _id:'',
+  errMsg:'',
+  redirectTo:''
+};
+
+function user(previousState = initUserState,action){
   switch (action.type){
+    case AUTHSUCCESS :
+      return {...action.data,redirectTo:geredirectTo(action.data.type,action.data.header)};
+    case AUTHERROR :
+      return {...initUserState,...action.data};
     default:
       return previousState;
   }
 }
-//暴露合并后的reducers函数
+function geredirectTo(type,header){
+  let path = '';
+  if(type === 'laoban'){
+    path='/laoban'
+  }else {
+    path='/dashen'
+  }
+  if(!header){
+    path+='info'
+  }
+  return path
+}
+//默认暴露合并后的reducers函数
 export default combineReducers({
-  initXxx,
-  initYyy
+  user
 })
