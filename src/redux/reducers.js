@@ -9,12 +9,17 @@ const initUserState ={
   type:'',
   _id:'',
   errMsg:'',
-  redirectTo:''
+  redirectTo:'',
+  header: '',
+  post: '',
+  company: '',
+  salary: '',
+  info: ''
 };
-
 function user(previousState = initUserState,action){
   switch (action.type){
     case AUTHSUCCESS :
+      // console.log({...action.data,redirectTo:geredirectTo(action.data.type,action.data.header)})
       return {...action.data,redirectTo:geredirectTo(action.data.type,action.data.header)};
     case AUTHERROR :
       return {...initUserState,...action.data};

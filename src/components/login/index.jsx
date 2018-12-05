@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Button,NavBar,WingBlank, WhiteSpace, List, InputItem,Radio } from 'antd-mobile';
+import {Button,NavBar,WingBlank, WhiteSpace, List, InputItem } from 'antd-mobile';
 import Logo from '../logo/index';
 import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
@@ -37,7 +37,7 @@ class Login extends Component{
           <WingBlank>
               <List>
                   <InputItem onChange={val=>this.handelChange('username',val)}>用户名：</InputItem><WhiteSpace/>
-                  <InputItem onChange={val=>this.handelChange('password',val)}>密码：</InputItem><WhiteSpace/>
+                  <InputItem onChange={val=>this.handelChange('password',val)} type="password">密码：</InputItem><WhiteSpace/>
                   <WhiteSpace/>
                   <Button type="primary" onClick={this.login}>登录</Button> <WhiteSpace/>
                   <Button onClick={this.goregister}>注册</Button>

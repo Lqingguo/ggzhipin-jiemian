@@ -2,7 +2,7 @@
  * Created by liqingguo on 2018/12/3.
  */
 
-import {registerajax,loginajax} from '../api'
+import {registerajax,loginajax,reqUpdate} from '../api'
 import {AUTHSUCCESS,AUTHERROR} from './actions-types'
 //同步
 export const authSuccess= data=>({type:AUTHSUCCESS,data})
@@ -52,6 +52,35 @@ export const login =({username,password})=>{
           dispatch(authSuccess(data.data))
         }else {
           //登录失败
+          dispatch(authError({errMsg:data.msg}))
+        }
+      })
+      .catch(err=>{
+        dispatch(authError({errMsg:'网路错误刷新重试'}))
+      })
+  }
+}
+
+//老板
+export const laoban = ({header,post,company,salary,info,type})=>{
+
+  if(!header){
+    return authError({errMsg:'请选择头像'})
+  }else if(type==='laoban'&&!post ){
+    return authError({errMsg:'请选择职位'})
+  }else if(type==='laoban'&&!company){
+    return authError({errMsg:'请选择职位名称'})
+  }else if(type==='laoban'&&!salary){
+    return authError({errMsg:'请选择薪资'})
+  }else if(!info){
+    return authError({errMsg:'请选择所需要的技术'})
+  }
+  return dispatch=>{
+    reqUpdate({header,post,company,salary,info})
+      .then(({data})=>{
+        if(data.code===0){
+          dispatch(authSuccess(data.data))
+        }else {
           dispatch(authError({errMsg:data.msg}))
         }
       })

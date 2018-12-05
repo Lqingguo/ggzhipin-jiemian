@@ -3,13 +3,12 @@ import {Button,NavBar,WingBlank, WhiteSpace, List, InputItem,Radio } from 'antd-
 import Logo from '../logo/index';
 import PropTypes from 'prop-types'
 import {Redirect} from 'react-router-dom'
- const Item = List.Item
+const Item = List.Item
 class Register extends Component{
   static propTypes ={
     user:PropTypes.object.isRequired,
     register:PropTypes.func.isRequired
   }
-
      state= {
        laoban:true,
        username:'',
@@ -22,14 +21,13 @@ class Register extends Component{
          })
      }
     gologin=()=>{
+    console.log(this.props.user)
       this.props.history.replace('/login');
     }
     goajax=async()=>{
       const {username,password,laoban,passwords} = this.state;
       this.props.register({username,password,passwords,type: laoban ? 'laoban': 'dashen'});
-
     }
-
     render(){
          const {laoban} =this.state;
          const {errMsg,redirectTo} = this.props.user;
