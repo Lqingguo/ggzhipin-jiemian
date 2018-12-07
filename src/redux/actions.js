@@ -2,12 +2,29 @@
  * Created by liqingguo on 2018/12/3.
  */
 
-import {registerajax,loginajax,reqUpdate} from '../api'
-import {AUTHSUCCESS,AUTHERROR} from './actions-types'
+import {
+  registerajax,
+  loginajax,
+  reqUpdate,
+  reqGetUserInfo,
+  getUserList
+} from '../api'
+import {
+  AUTHSUCCESS,
+  AUTHERROR,
+  UPDATEUSERINFO,
+  RESETUSERINFO,
+  UPDATEUSERLIST,
+  RESETUSERLIST
+} from './actions-types'
 //同步
 export const authSuccess= data=>({type:AUTHSUCCESS,data})
 export const authError = data=> ({type:AUTHERROR,data})
 //异步
+export const updateUserInfo = data=>({type:UPDATEUSERINFO,data});
+export const resetUserInfo =data=>({type:RESETUSERINFO,data})
+export const updateUserList = data=>({type:UPDATEUSERLIST,data});
+export const resetUserList =()=>({type:RESETUSERLIST})
 //注册
 export const register =({username,password,passwords,type})=>{
   //表单验证
@@ -87,5 +104,33 @@ export const laoban = ({header,post,company,salary,info,type})=>{
       .catch(err=>{
         dispatch(authError({errMsg:'网路错误刷新重试'}))
       })
+  }
+}
+export const getUserInfo=()=>{
+  return dispatch=>{
+    reqGetUserInfo()
+      .then(({data})=>{
+      if(data.code === 0){
+        dispatch(updateUserInfo(data.data))
+      }
+      })
+      .catch(err=>{
+        dispatch(resetUserInfo({errMsg:'网络不稳定，刷新重试'}))
+      })
+  }
+}
+export const getUserLista=type=>{
+ return dispatch=>{
+   getUserList(type)
+     .then(({data})=>{
+     if(data.code===0){
+       dispatch(updateUserList(data.data))
+     }else {
+       dispatch(resetUserList())
+     }
+     })
+     .catch(err=>{
+       dispatch(resetUserList())
+     })
   }
 }

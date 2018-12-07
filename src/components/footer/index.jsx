@@ -19,7 +19,7 @@ class Footer extends Component{
     return (
       <TabBar>
         {
-          navList.map((item,index)=><Item
+          navList.map((item,index)=><Item className="footer"
             key={index} title={item.text}
             icon={<img className="tupian" src={require(`./images/${item.icon}.png`)} alt={item.text}/>}
             onPress={this.redirectTo.bind(null, item.path)}
